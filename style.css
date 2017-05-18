@@ -1,0 +1,53 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+line {
+  stroke: black;
+  stroke-width: 0.5px;
+}
+
+circle:hover {
+	fill: #CC3300;
+}
+
+g.hidden line,
+g.hidden path {
+  display: none;
+}
+
+text {
+    text-align: justify;
+}
+svg {
+	color: aqua
+}
+
+ul {
+    margin:0;
+    padding: 0px;
+	display:inline-block;
+    text-align: right;
+    vertical-align: middle;
+    list-style: none;
+}
+ul  li {
+    padding: 20px 20px;		
+}
+
+#mapcontainer { height: 1300px; }
+
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;  
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  font: 13px sans-serif;
+  background: #d3d3d3;
+  border: 0px;      
+  border-radius: 8px;
+  pointer-events: none;
+}
