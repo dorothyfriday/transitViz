@@ -1,9 +1,9 @@
-
+// Variable holding future tooltip
 var div = d3.select("body").append("div")
     .attr("class", "tooltip valign-wrapper")
     .style("opacity", 0);
 
-//Basemap settings
+// Basemap settings
 var map = L.map('mapcontainer').setView([39.78, -104.94], 10);
 L.tileLayer('https://api.mapbox.com/styles/v1/drc0g/cj1cqr0u9006b2rquqfpf1qtu/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZHJjMGciLCJhIjoiY2lvbG44bXR6MDFxbHY0amJ1bTB3bGNqdiJ9.yVn2tfcPeU-adm015g_8xg', {
     attribution: 'Map data &copy; <a href="http://maps.rtd-denver.com/GisDatadownload/datadownload.aspx">RTD</a>, <a href="http://gis.drcog.org/datacatalog/">DRCOG </a>, <a href="http://www.costar.com">CoStar Realty Information, Inc.</a>, <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, © <a href="http://mapbox.com">Mapbox</a>',
@@ -12,34 +12,33 @@ L.tileLayer('https://api.mapbox.com/styles/v1/drc0g/cj1cqr0u9006b2rquqfpf1qtu/ti
     accessToken: 'pk.eyJ1IjoiZHJjMGciLCJhIjoiY2lvbG44bXR6MDFxbHY0amJ1bTB3bGNqdiJ9.yVn2tfcPeU-adm015g_8xg'
 }).addTo(map);
 
-
-
+// Attention leaflet, svgs en route
 var svgmap = d3.select(map.getPanes().overlayPane).append("svg"),
     gmap = svgmap.append("g").attr("class", "leaflet-zoom-hide");
 
+// Selecting div id from html
 var transitLines = d3.select("#transitLines");
 
+// Setting scale for future circles
 var sqrtScale = d3.scaleSqrt()
 	.domain([0, 8000])
 	.range([0, 25]);
 
-//hello data
+// Hello data
 d3.json("housing_emp.json", function(error, data) {
   if (error) throw error;
 
-//creates custom projection for svg window
-
+// Creates custom projection for svg window *Thank you D3
   var transform = d3.geoTransform({point: projectPoint});
   var path = d3.geoPath().projection(transform)
 
-  //Add path element from data
-  
+// Add path element from data  
   var feature = gmap.selectAll("path")
       .data(data.features)
     .enter().append("path").style("fill","DarkBlue")
     .attr("class", function(d) {return "pt-" + d.properties.stationid});
 
-//Do the following shit on zoom, view, or reset of map.
+// Do the following shit on zoom, view, or reset of map.
   map.on("zoom viewreset", reset);
   reset();
 
@@ -74,35 +73,37 @@ d3.json("housing_emp.json", function(error, data) {
         console.log(groupedArr);
         console.log(groupedData);
         
-    
+//Adding rows to the chart
+ 
         var row = transitLines.selectAll("div")
             .data(groupedArr)
             .enter()
             .append("div")
 			.attr("class", "valign-wrapper row")
-            
-			.style("height", "100px")
+       			.style("height", "100px")
         
         var column1 = row.append("div")
                          .attr("class","col s2 m2 l2");
 		
         var column2 = row.append("div")
                         .attr("class", "col s10 m10 l10")
-			
+
+//Adding text to the chart
             column1.append("h6")
 			.attr("class", "valign")
             .text(function(d, i){
                 return d.name;
             })
             .style("text-align", "right");
-			
-			column2.append("svg").style("width", 800).style("height",200).attr("class", "chart");
+
+//Adding shapes to the chart
+	    column2.append("svg").style("width", 800).style("height",200).attr("class", "chart");
 
         var svg = d3.selectAll(".chart")
 
         var g = svg.append("g")
 
-
+//Adding station lines to the chart
         g.append("line")
             .attr("x1", 100)
             .attr("y1", 100)
@@ -111,6 +112,7 @@ d3.json("housing_emp.json", function(error, data) {
                 return 100 + (d.data.length * 40)
         })
 
+//Adding circles to the chart.
         svg.selectAll("circle")
           .data(function(d){
         
@@ -134,7 +136,8 @@ d3.json("housing_emp.json", function(error, data) {
                 div.html(d.properties.station + ", Near " + d.properties.units + " Units")
                 .style("left",(d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 28) + "px")
-            
+           
+		//See here's where you add matching station id on map!
                 var sel = ".pt-" + d.properties.stationid
             
                 d3.selectAll(sel)
