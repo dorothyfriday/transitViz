@@ -23,6 +23,7 @@ var sqrtScale = d3.scaleSqrt()
 	.domain([0, 8000])
 	.range([0, 25]);
 
+//hello data
 d3.json("housing_emp.json", function(error, data) {
   if (error) throw error;
 
@@ -42,7 +43,7 @@ d3.json("housing_emp.json", function(error, data) {
   map.on("zoom viewreset", reset);
   reset();
 
-  // Reposition the SVG to cover the features.
+// Reposition the SVG to cover the features.
   function reset() {
     var bounds = path.bounds(data),
         topLeft = bounds[0],
@@ -65,7 +66,6 @@ d3.json("housing_emp.json", function(error, data) {
   }
     
 // Adding the chart with data.
-// Hello data.
     
         var groupedData = _.groupBy(data.features, function(x){return x.properties.route});
         var groupedArr = _.keys(groupedData).map(function(y){
