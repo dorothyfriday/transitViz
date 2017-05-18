@@ -1,6 +1,3 @@
-//How do in this data from csv and use it.
-//How do I draw all of the lines at once while stopping the length of line where data stops
-//How do I create proper tooltips?
 
 var div = d3.select("body").append("div")
     .attr("class", "tooltip valign-wrapper")
