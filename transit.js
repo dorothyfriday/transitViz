@@ -35,7 +35,7 @@ d3.json("housing_emp.json", function(error, data) {
 // Add path element from data  
   var feature = gmap.selectAll("path")
       .data(data.features)
-    .enter().append("path").style("fill","DarkBlue")
+    .enter().append("path").style("fill","#04244D")
     .attr("class", function(d) {return "pt-" + d.properties.stationid});
 
 // Do the following shit on zoom, view, or reset of map.
@@ -141,7 +141,7 @@ d3.json("housing_emp.json", function(error, data) {
                 var sel = ".pt-" + d.properties.stationid
             
                 d3.selectAll(sel)
-                  .style("fill", "DarkBlue")
+                  .style("fill", "#04244D")
                   .style("stroke","red")
                   .style("stroke-width", 10)
                   .style("z-index", 10000);
@@ -154,8 +154,8 @@ d3.json("housing_emp.json", function(error, data) {
             var sel = ".pt-" + d.properties.stationid
             
                 d3.selectAll(sel)
-                  .style("fill","DarkBlue")
-                  .style("stroke","DarkBlue")
+                  .style("fill","#04244D")
+                  .style("stroke","#04244D")
                   .style("stroke-width", 1);
         });
 });
